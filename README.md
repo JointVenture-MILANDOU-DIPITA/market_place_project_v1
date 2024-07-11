@@ -20,7 +20,7 @@ Pour utiliser les controleurs de paiement ainsi que les routes associées :
 Vous pouvez utliser les variables suivantes : 
 
 
-endpointSecret = 'whsec_655c86947dad01356835c55095895d4326b665837e5d8c545c22cac1bea7c851' (clé de sécurité stripe lue par le webhook)
+endpointSecret = 'whsec_655c86947dad01356835c55095895d4326b665837e5d8c545c22cac1bea7c851' (clé stripe lue par le webhook)
 
 BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour la session de paiement)
 
