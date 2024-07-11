@@ -6,17 +6,17 @@ Pour travaillez sur l'API, veuillez  :
 2. créer un fichier .env à la racine du dossier api
    
 4. Dans le fichier .env, créer les variables :
-a. PORT = pour stocker le port
-b. JWT_SECRET = pour définir une clé JWT
-c. user_mail = pour définir un serveur SMTP
+a. PORT = pour stocker le port |
+b. JWT_SECRET = pour définir une clé JWT |
+c. user_mail = pour définir un serveur SMTP |
 d. mdp_mail = pour définir la clé d'accès à votre serveur smtp
 
 Pour utiliser les controleurs de paiement ainsi que les routes associées : 
 
 Vous pouvez utliser : 
-1.endpointSecret = 'whsec_655c86947dad01356835c55095895d4326b665837e5d8c545c22cac1bea7c851' (clé de sécurité stripe lue par le webhook)
+1.endpointSecret = 'whsec_655c86947dad01356835c55095895d4326b665837e5d8c545c22cac1bea7c851' (clé de sécurité stripe lue par le webhook) |
 
-2. BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour la session de paiement)
+2. BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour la session de paiement) |
    
 4. STRIPE_SECRET_KEY = sk_test_51PGXOLDQ2yD2McZ1rYtB5zPibJgTgsClxmcb5yOC8NheNeOV4lEzQtXaZjRzFGLQGmOzpk3zJFfqTCQrUc7TFMz300Xt3vmZFr (clé stripe)
 
