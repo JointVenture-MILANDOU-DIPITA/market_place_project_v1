@@ -1,4 +1,4 @@
-Ce projet regroupe une api et un client front d'une marketplace.
+Ce projet regroupe l'api et le client front d'une marketplace.
 
 Pour travaillez sur l'API, veuillez  : 
 
