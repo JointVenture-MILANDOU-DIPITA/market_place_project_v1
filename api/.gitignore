@@ -3,3 +3,6 @@ node_modules/
 .env
 
 /src/testMailer.ts
+
+#Ne pas publier les fichiers build
+./build
