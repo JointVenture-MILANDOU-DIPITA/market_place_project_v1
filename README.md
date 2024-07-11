@@ -4,7 +4,8 @@ Pour travaillez sur l'API, veuillez  :
 
 1. Placez vous dans le dossier api puis Installer les dépendences nécessaires à l'API à l'aide de la commande npm install
 2. créer un fichier .env à la racine du dossier api
-3. Dans le fichier .env, créer les variables :
+   
+4. Dans le fichier .env, créer les variables :
 a. PORT = pour stocker le port
 b. JWT_SECRET = pour définir une clé JWT
 c. user_mail = pour définir un serveur SMTP
