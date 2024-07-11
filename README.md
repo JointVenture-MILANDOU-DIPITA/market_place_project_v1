@@ -23,8 +23,42 @@ cd api; npm install
    user_mail = pour définir un serveur SMTP
 
    mdp_mail = pour définir la clé d'accès à votre serveur smtp
-### Ajouter la base de données Prisma
-DATABASE_URL="mysql://root:@localhost:3306/yann_store?schema=public"
+### Ajouter la base de données à Prisma
+- Installer mysql-server
+Si vous êtes sur Ubuntu/Linux
+<code> sudo apt install mysql-server</code>
+
+- Creer une base de données et un utilisateur
+<code>sudo mysql -u root -p </code>
+
+CODE SQL
+<code>
+CREATE DATABASE mon_projet;
+CREATE USER 'mon_utilisateur'@'localhost' IDENTIFIED BY 'mon_mot_de_passe';
+GRANT ALL PRIVILEGES ON mon_projet.* TO 'mon_utilisateur'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+</code>
+
+- Configurer Prisma pour se connecter à la base de données MySQL
+Metter à jour le fichier ".env"
+DATABASE_URL="mysql://mon_utilisateur:mon_mot_de_passe@localhost:3306/mon_projet"
+- Verifier que le prisma/schema.prisma est configuré pour utiliser MySQL
+<code>
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+</code>
+
+- Appliquer les migrations existantes
+<code>
+npx prisma migrate deploy
+</code>
+
+- Générer le Client Prisma
+<code>npx prisma generate</code>
+
 ### Creer un compte Stripe
 Pour utiliser les controleurs de paiement ainsi que les routes associées : 
 Vous pouvez utliser les variables suivantes : 
