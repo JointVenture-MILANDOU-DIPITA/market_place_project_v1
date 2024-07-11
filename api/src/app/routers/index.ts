@@ -27,8 +27,9 @@ rootRouter.use("/admin/products", adminProducts)
 rootRouter.post('/create-payment-session', createPaymentSession)
 
 rootRouter.get("/", (req, res)=>{
-    const documentationUrl = "https://5f98-92-88-171-222.ngrok-free.app/api-docs";
-    return res.status(200).json({message : "Hi buddy, welcome to my marketplace API, get the doc here:", documentationUrl})
+    //TODO Supprimer documentationURL
+    //const documentationUrl = "https://5f98-92-88-171-222.ngrok-free.app/api-docs";
+    return res.status(200).json({message : "Hi buddy, welcome to my marketplace API, get the doc here:"})
 })
 
 

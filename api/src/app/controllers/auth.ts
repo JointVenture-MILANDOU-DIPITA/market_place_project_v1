@@ -29,7 +29,7 @@ export const signup = async (req: Request, res: Response) =>{
       expiresIn: '30m'
   })
 
-
+  //TODO Supprimer le localhost
     const confirmationLink = `http://localhost:3000/api/market_place/v1/auth/confirm-email?token=${token}`;
     await sendConfirmationEmail(email, 'Confirm your account', `Please confirm your account by clicking the following link: ${confirmationLink}`);
 
