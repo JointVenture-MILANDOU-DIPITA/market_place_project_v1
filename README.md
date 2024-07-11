@@ -2,7 +2,7 @@ Ce projet regroupe l'api et le client front d'une marketplace.
 
 Pour travaillez sur l'API, veuillez  : 
 
-1. Placez vous dans le dossier api puis Installer les dépendences nécessaires à l'API à l'aide de la commande npm install
+1. Vous placez vous dans le dossier api puis Installer les dépendences nécessaires à l'API à l'aide de la commande npm install
 2. créer un fichier .env à la racine du dossier api
    
 4. Dans le fichier .env, créer les variables :
