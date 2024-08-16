@@ -75,4 +75,245 @@ Le serveur se lance sur le PORT défini dans le .env
 ## Construire le client
 BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour la session de paiement)
 
+# Utilisation de l'API
+
+## Liste des routes
+1. [Routes d'authentification](#routes-dauthentification)
+2. [Routes administratives (Admin)](#routes-administratives-admin)
+    - [Gestion des utilisateurs](#gestion-des-utilisateurs)
+    - [Gestion des produits](#gestion-des-produits)
+    - [Gestion des commandes](#gestion-des-commandes)
+3. [Routes utilisateur](#routes-utilisateur)
+4. [Routes de la boutique (Shop)](#routes-de-la-boutique-shop)
+    - [Gestion des produits](#gestion-des-produits-shop)
+    - [Gestion des commandes](#gestion-des-commandes-shop)
+    - [Gestion des paniers](#gestion-des-paniers)
+5. [Routes de paiement](#routes-de-paiement)
+6. [Route principale (RootRouter)](#route-principale-rootrouter)
+7. [Middlewares](#middlewares)
+
+---
+
+## Routes d'authentification
+
+### **POST** `/auth/signup`
+- **Description** : Crée un nouvel utilisateur.
+- **Corps de la requête** :
+  ```json
+  {
+    "username": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Réponse** : Confirmation de la création de l'utilisateur.
+
+### **POST** `/auth/login`
+- **Description** : Connecte un utilisateur existant.
+- **Corps de la requête** :
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Réponse** : Jeton d'authentification.
+
+### **POST** `/auth/logout`
+- **Description** : Déconnecte l'utilisateur.
+
+### **GET** `/auth/confirm-email`
+- **Description** : Confirme l'adresse e-mail de l'utilisateur via un token envoyé par e-mail.
+- **Query Parameters** :
+  - `token` : Token de confirmation.
+
+## Routes administratives (Admin)
+
+### Gestion des utilisateurs
+
+#### **GET** `/admin/users`
+- **Description** : Récupère la liste de tous les utilisateurs.
+- **Middleware** : `isAdmin`
+- **Réponse** : Liste des utilisateurs.
+
+#### **DELETE** `/admin/user/:id`
+- **Description** : Supprime un utilisateur spécifique.
+- **Params** :
+  - `id` : ID de l'utilisateur à supprimer.
+- **Middleware** : `isAdmin`
+- **Réponse** : Confirmation de la suppression de l'utilisateur.
+
+### Gestion des produits
+
+#### **POST** `/admin/products/product`
+- **Description** : Crée un nouveau produit.
+- **Corps de la requête** :
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "price": "number",
+    "stock": "number"
+  }
+  ```
+- **Middleware** : `isAdmin`
+- **Réponse** : Détails du produit créé.
+
+#### **PUT** `/admin/products/product/profile/:id`
+- **Description** : Met à jour un produit spécifique.
+- **Params** :
+  - `id` : ID du produit à mettre à jour.
+- **Middleware** : `isAdmin`
+- **Réponse** : Détails du produit mis à jour.
+
+#### **DELETE** `/admin/products/product/:id`
+- **Description** : Supprime un produit spécifique.
+- **Params** :
+  - `id` : ID du produit à supprimer.
+- **Middleware** : `isAdmin`
+- **Réponse** : Confirmation de la suppression du produit.
+
+### Gestion des commandes
+
+#### **GET** `/admin/orders`
+- **Description** : Récupère la liste de toutes les commandes.
+- **Middleware** : `isAdmin`
+- **Réponse** : Liste des commandes.
+
+#### **GET** `/admin/orders/orderDetails/:id`
+- **Description** : Récupère les détails d'une commande spécifique.
+- **Params** :
+  - `id` : ID de la commande.
+- **Middleware** : `isAdmin`
+- **Réponse** : Détails de la commande.
+
+#### **DELETE** `/admin/orders/order/:id`
+- **Description** : Supprime une commande spécifique.
+- **Params** :
+  - `id` : ID de la commande.
+- **Middleware** : `isAdmin`
+- **Réponse** : Confirmation de la suppression de la commande.
+
+## Routes utilisateur
+
+### **GET** `/user/`
+- **Description** : Récupère les informations du profil de l'utilisateur connecté.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Détails de l'utilisateur.
+
+### **PUT** `/user/profile/:id`
+- **Description** : Met à jour les informations du profil d'un utilisateur spécifique.
+- **Params** :
+  - `id` : ID de l'utilisateur.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Détails de l'utilisateur mis à jour.
+
+## Routes de la boutique (Shop)
+
+### Gestion des produits (Shop)
+
+#### **GET** `/shop/products`
+- **Description** : Récupère la liste de tous les produits disponibles.
+- **Réponse** : Liste des produits.
+
+#### **GET** `/shop/product/:id`
+- **Description** : Récupère les détails d'un produit spécifique.
+- **Params** :
+  - `id` : ID du produit.
+- **Réponse** : Détails du produit.
+
+### Gestion des commandes (Shop)
+
+#### **POST** `/shop/user/order`
+- **Description** : Crée une nouvelle commande pour l'utilisateur connecté.
+- **Middleware** : `isAuthenticated`
+- **Corps de la requête** : Détails des produits commandés.
+- **Réponse** : Détails de la commande créée.
+
+#### **GET** `/shop/user/myOrders`
+- **Description** : Récupère la liste des commandes de l'utilisateur connecté.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Liste des commandes.
+
+#### **GET** `/shop/user/myOrderDetails/:id`
+- **Description** : Récupère les détails d'une commande spécifique de l'utilisateur connecté.
+- **Params** :
+  - `id` : ID de la commande.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Détails de la commande.
+
+#### **DELETE** `/shop/user/myOrder/:id`
+- **Description** : Supprime une commande spécifique de l'utilisateur connecté.
+- **Params** :
+  - `id` : ID de la commande.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Confirmation de la suppression de la commande.
+
+### Gestion des paniers
+
+#### **POST** `/shop/cart`
+- **Description** : Ajoute un produit au panier de l'utilisateur connecté.
+- **Middleware** : `isAuthenticated`
+- **Corps de la requête** : Détails du produit à ajouter.
+- **Réponse** : Détails du panier mis à jour.
+
+#### **POST** `/shop/cart/:cartId/:id`
+- **Description** : Ajoute un produit spécifique au panier via son ID.
+- **Params** :
+  - `cartId` : ID du panier.
+  - `id` : ID du produit.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Détails du panier mis à jour.
+
+#### **DELETE** `/shop/cart/Item/:cartId/:productIds`
+- **Description** : Supprime des produits spécifiques du panier.
+- **Params** :
+  - `cartId` : ID du panier.
+  - `productIds` : IDs des produits à supprimer.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Confirmation de la suppression des produits.
+
+#### **GET** `/shop/myCart/:cartId/:id`
+- **Description** : Récupère les détails d'un panier spécifique.
+- **Params** :
+  - `cartId` : ID du panier.
+  - `id` : ID de l'utilisateur.
+- **Middleware** : `isAuthenticated`
+- **Réponse** : Détails du panier.
+
+## Routes de paiement
+
+### **POST** `/create-payment-session`
+- **Description** : Crée une session de paiement pour l'utilisateur connecté.
+- **Corps de la requête** : Détails de la commande pour laquelle la session est créée.
+- **Réponse** : Détails de la session de paiement.
+
+### **POST** `/shop/payment/webhook`
+- **Description** : Gère les webhooks Stripe pour les paiements.
+- **Corps de la requête** : Webhook Stripe.
+- **Réponse** : Confirmation de la réception du webhook.
+
+### **GET** `/shop/payment/success`
+- **Description** : Affiche la page de succès après un paiement réussi.
+- **Réponse** : Message de succès.
+
+### **POST** `/shop/payment/cancel`
+- **Description** : Annule une session de paiement.
+- **Réponse** : Confirmation de l'annulation.
+
+## Route principale (RootRouter)
+
+### **GET** `/`
+- **Description** : Point d'entrée principal de l'API. Affiche un message de bienvenue et un lien vers la documentation (à configurer).
+
+## Middlewares
+
+### `isAuthenticated`
+- **Description** : Vérifie si l'utilisateur est connecté avant d'autoriser l'accès à certaines routes.
+
+### `isAdmin`
+- **Description** : Vérifie si l'utilisateur est un administrateur avant d'autoriser l'accès à certaines routes.
+
+
+
 
